@@ -1,0 +1,25 @@
+name: palx-text-editor
+base: core24
+version: '0.0.1'
+summary: PalX Text Editor
+description: |
+  A terminal-based text editor built from scratch.
+
+grade: stable
+confinement: strict
+
+apps:
+  palx:
+    command: bin/palx
+    plugs: [home, removable-media]
+
+parts:
+  palx-text-editor:
+    plugin: nil
+    source: .
+    build-packages:
+      - gcc
+    override-build: |
+      gcc palx_text_editor.c -o palx
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp palx $SNAPCRAFT_PART_INSTALL/bin/palx
