@@ -1,0 +1,109 @@
+In the raw mode we removed each and every function already so now we now completely define all the functions from core again specifically for the text editor 
+First we defined the ctrl key see here we have some number and then we do the & with the 0x1f which just indicates that that the ctrl button is clicked or tha
+t flags are edited that way like we got the ascii characters for  all the commands and then here we want it to be like 
+Now here we are defining the ctrl key cause see we don't want to write the ascii key / number again and again so we just defined it like this so that if we 
+just put it in the k & 0xf1 we directly get the ascii number simple. 
+Lets begin with ending the function with ctrl + q 
+Okay now we are making the new function for reading all the terms why cause  see in the very first it was not waiting for the alphabets to be written it was 
+continuously  throwing the 0 now it waits for the user to enter the term first also we made these functions cause we have some new functions needed to be 
+added and its just better easier and less of a mess to handle . 
+Now listen this is where we kind of split ways with kilo 
+Kilo render system is like you type something all the characters are given to the terminal and then terminal creates 1 huge thing or render and then give it 
+to the user where as in today current optimised text editors use the difference systems like you look in the coordinates of the stuff and then whatever is 
+changed only those needs to be changed the rest remains the same 
+
+So for now we are skipping few functions and continuing with the functions which are needed regardless any of the algorithm is used 
+Now listen there was this vt100 emulator a very old age emulator on basis of this these commands were designed on if you can see
+\x1b is escape button 
+[ this ensures that we are on the escape function now currently 
+2 represents that how much of the screen needs to be clear like there are multiple options we can like have the till cursor or full or after cursor like those
+I am speaking of 
+And J is usually used to clear out the screen 
+These commands are known as escape commands these often start with escape word with ] followed with it and there are often used in like moving cursor or clearing
+the screen or adding some colour or something like that 
+Now after clearing we see that the cursor is not at the top most left side its anywhere the thing left on the page so we fix it same we use the escape function 
+See here the code is like \x1b[H again h represents the functions regarding the cursor and the as here we want it to point to the start so we leave it like this
+but if we want the cursor to somewhere else we do like this 
+\x1b[8;4H these are like coordinates we have 
+Okay we are going to keep these functions in the end of the programme as well cause if any of the error happens we don't need it to post any of the random garbage
+it just clears out simply 
+Now see we could have done added the commdns in the ataxia itself but if any of the errors occur we dont want them to disappear so e keep it at this point so any
+error occurs we get it cuase atexit works regardless the the compilation issue occurs or not 
+
+We add tlides in the txt editor like just for majority to like its there for understanding liek these many columns or that is there for user I mean it just looks 
+good nothing else 
+
+See when we like need to clear out the screen like see right now the text editor will be on terminal so now we need to like clear the whole terminal like a2z 
+everything first and then we edit on that space so now work for it now see for this one we have 
+Okay number 1 we first define a global structure for storing like all the rows and the columns of the terminal for rendering we store all those values in this
+one part so for now we are storing all the original strut which we used t keep the flags of the terminal of the settings of the terminal stored in this one 
+Okay many of the devices do not support this ioctl its fast and cool but the terminal based thing maybe some places may not be there so we need to add a manual
+way as well for calculating window size the thing here is we just do the cursor move down by 999 and to the right by 999 now there is strict guidelines to that 
+the cursor cannot move greater than the size of the terminal so we can get the exact size of the window by calculating it 
+So now what we do exactly over here is so now what we do is we take the coordinates of the cursor position and then we put this one \x1b[6n it directly gives 
+us the cursor position in the format liek this 
+\x1b[20;20R 
+So now here we directly use the library of the scan it is like a scan function of the string like it takes the numbers from the string imagine it like that 
+And we get it 
+
+Now coming on the writing part see wee are writing all the text and then the tlides or even the compounds which are there like clearing the screen and then the
+cursor position  see over here we are constantly doing the write function again and again for the stuff so now we make a dynamic string of our own so that its 
+easier to make it and the write function is not called out again and again and errors won't happen that much 
+
+So what happens is we have the buffer we created it have the pointer and the size its for the byte size majority in like writing on later on we often need the 
+byte size so we keep track of it as well and then we create one with the null and the size as 0 for initialisation 
+Then we have the appender whatever data we need to add we just add the data in the the pointer which we designed but before it we need to reallocate the thing 
+as the as we are going to need more size than currently it is so now we dd more pointer size as per the data we have and the length as per the size of the 
+appending operations we are going to write that are appended and then once we get it we then do 
+Memcpy it is used to copy all the data its syntax is like ( destination , source , size ) 
+And then we add the data to the sturct which we created and then update the size of the bytes as well simultaneously 
+We had the free function as well it frees all the memory which is taken by the dynamic string 
+
+Many of the times the cursor may flicker till the terminal is executing the or writing all the stuff this doesn't not happen but in suppose very slow computers 
+or something like that it may occur so its better for it to do like it so we just hide the cursor before writing it and then again show it 
+
+Okay one of the optimisation over here was like see the clearing the entire screen is not really the thing okay so we like before we have to add any of the thing 
+on the line we first clear that line and do any thing on that line so its a bit of optimisation faster + memory management 
+
+Now we come on the part of the welcome part see we keep wherever we want to okay where ever you feel like okay and then as we need it we first look if the size
+of the thing is going outside of the terminal or not if it goes we chop off the size of the messege we have here so then its like it should fit in the terminal 
+size we allocated thats it 
+So now lets tackle it one by one here okay see in the snprintf we are doing is whatever we have to type it it writes it in the variable for us and it also gives 
+out the length of the entire thing which is written in the string 
+Welcome is the string used the sizeof(windows) the maximum size which can be allocated and the rest stuff is just the one which we are typing out thats it 
+
+
+Okay time for the cursor to move on our screen here 
+So now first what we do is we first add the attributes of the cursor position in the main structure which we have created and then we we make a enum of all the 
+functions like 
+    Arrow_left ,
+    Arrow_right ,
+    Arrow_up ,
+    Arrow_down 
+One thing we need to know is the default cursor rows and cursor columns we need to keep 0 at the very first cause the in c int starts from 0 but our terminal
+always begins with 1 so before anything we need to increment both the attributes with 1 and then do whatever it is 
+So like the main int remains the 0,0 starts from here and we increment it but for these reasons we just need it add it every single time here 
+
+
+What is it see it directly assigned the button a number directly we are assigning here the higher number like 1000 so that no other conflict appears With as 
+the ascii code should not interfere with these ones so a higher one one more note we just need to give 1 term a number the rest just goes on incrementing as we want 
+Now listen the cursor movements are also done by the escape sequences like 
+\x1b[A for moving up and similarly others 
+So what we check out the escape one first and make the buffer over here first we check the escape if the escape happens we exact the thing and then we check for 
+the other stuff we make a buffer over here of 2 bits we just need to check 2 bits only but we make it for 3 bits cause for further we might need it 
+So we check the [ and the A/B/C/D if there we just call out the function we have we update the attributes which are created of cursor rows and the cursor columns
+as per the thing is and then we print it out 
+
+How do we print it we just add the thing in our main buffer which awe have over here some of the explanation I did said in upper part but rest is this 
+We do the snprintf which is the same it takes all the thing and then put it in the buffer 
+"\x1b[%d;%dH" , edit.cursor_rows + 1  , edit.cursor_cols + 1 
+Takes rows. Takes columns and then put it in the escape sequence and then print it 
+
+Okay next are the new buttons or options like now there is this page up and the page down stuff we aint doing anything now but just adjusting the cursor rows 
+and cursor columns thats it nothing else 
+
+2 new ones which are the home key and the end key home key means it points the start of the line and the end key points the end of the line thats it we do the
+same thing in our part 
+And we just define the delta but don't do anything of it for now 
+
+

@@ -1,0 +1,191 @@
+Okay here we deal up with the text which we have to display it and opening the already written text which 
+are here in the file or something like that 
+First we make a strict for the input which we have the 
+Typedef is simpler version of the structure we don't have to write struct again and again it just does the
+job easily and it contains the data and the size of the data which is there 
+We add the attribute of number of rows in the thing and update it as we do the thing is we just write whatever
+we want we then allocate the memory do the malloc update the struct which we have created with the size as per
+the length is of the text and then we do the malloc to the data attribute of the sturct see we do len + 1 cause
+there is one \0 which we need to consider and add the malloc for it as well its usefulness is there as we can 
+identify that the sentence is ended here and stuff like that then we memcpy copy all the contents present in
+the line to the data attribute in the struct and we then update the row count which we have in the main struct
+Malloc syntax is like 
+  
+Now here we kind of open up the file and then open it for reading purpose and then we do the getline what it
+does is it takes all the content in the file and then Put it in the lines or part we want to put it in and if
+we assign it to the variable we can get the length of the thing as well and now here in the string may contain
+\n\r we kind of want to skip those as well as they are of no use so we do it and in the very end the memory
+which we gave to the lines we free them up so that it don't take the excess stupid memory 
+
+Okay in the main function we pass the arguments like first int argc means the number of arguments which are 
+present and the other one is directly the argument character like lets suppose 
+./txt varad.txt now here the ./txt is 1 argument and the varad.txt is other one so its like 2 different arguments
+and we want to send it to the function so we just pass the argument 2 which is the file name pass it to the thing 
+
+Okay for the multiple line we put the thin in the loop as the lines we are using is in the array * this thing
+signifies this thing and we just put in the loop directly the auto increment occurs and then we start appending 
+the lines in the buffer which we have created first of all we need to reallocate the memory of 
+struct contents * number of lines 
+Now we need to do it every single time cause our number of lines is increasing every single time 
+
+Okay here comes the interesting part now see if the file is huge huge and we want to scroll thorugh the file we
+keep one attribute known as offset it refers to the first line of the page anywhere like suppose the cursor is 
+on something on line 520 and the page starts at the 500 so the offset is 500 here so its like it and by default
+we keep it 0 so that whenever we start it points the start of the stuff and now we head towards the scrolling
+the things 
+
+See we have the offset like somewhere the page is upwards and the cursor is below see this happens in like the 
+searching stuff you searched something in the file you got the offsets of 500 but your cursor is just on the 50
+so it comes to it so like a backup stuff 
+And on the next part if you can see if the cursor is gone wayyy further the offset is below then suppose the 
+offset is at 20 and if the cursor is nowhere inside the screen in the thing and is very very far away so we 
+then keep the offset as the cursor which is there - (the first term is needed ) so screen rows 
+This settles our cursor stuff only needed is the cursor showing or displaying we do it in the snprintf thing
+there we need to update if the cx is gone way way huge we need to reduce it with the offset so that we can get
+the correct path also we have restricted the arrow down part we remove restrictions over it as well 
+
+Okay see now we have few modifications in the txt print stuff okay see first of all were use this one here 
+		 int correct_row = i + edit.row_offset ; 
+ 
+So here are just taking all the things in the account before doing anything so like only the parts which we
+need to see will only be started from here its like that and as we have the protocol to clear the screen line
+by line as it is faster and better so it removes all the line first and then we append all the buffer lines
+which we have allocated to the particularly row ( correct_row ) this one and then from there we just we append
+all the text which are present in the stuff till the screen end and then print it see this is inversely true 
+reverse as well as the cursor position is handled inversely	as well the offset needs to follow the cursor only 
+so then our offset gets corrected and then we can do it 
+
+Now see here na the while loop works continuously anything different come we  do the work so now here we like
+change initialise the buffer every single time so that just the part which we want only come and we print it
+why not free it if we do then the st
+
+
+----------------------------------------
+Hey clear the doubt about the malloc and the realloc you had 
+
+---------------------------------------
+
+
+Okay we enable scrolling of the horizontal as well majority of the procedure is same as the row offset things
+change only at the printing stuff so like see first we were just passing out the data to the thing now what we
+do is we were passing entire thing in here 
+edit.ri[correct_row].data 
+This gave the address of the entire string to us and then the thing was printed but now we need to like as we 
+go or scroll the thing we need to start the thing to printing from there onwards so now 
+&edit.ri[correct_row].data[edit.col_offset] 
+& is needed as it is the pointer towards the specific word here 
+Now also we need to print this things so the affect the part of the length of bytes of the text is so we need 
+to like add the edge cases which causes the problem like these see the difference of the cursor and the offset
+can be negative so we need to make it correct as the byte size cannot be negative now 0 also and done set 
+
+We come on the the arrow keys again see now the issue can come where like you scrolled a lot to the right and
+now we wirte something its just not that good and makes no sense so we keep the option limited to only scroll
+the right till the line is present or not 
+With the arrow left if we reach to the first character we might need it on the last lines end part so that
+needs to be executed 
+
+And on the critical part now see if some line is big and we do like arrow up and arrow down and their size
+is smaller than the one line then the cursor moves to point which is far away from where it needs to be so 
+that modifications needs to be done on the arrow up and arrow down 
+
+Comming on some common commands like 
+End key which takes the cursor to directly the end of the line now we need to make sure that the cursor
+should be present in the screen if this function needs to be used else it would go like somewhere absurd
+so we need to check first the cursor position and then do the stuff 
+
+Home key takes us to the first line no need for anything here 
+
+Page up and the page down see the page up means it goes one entire page up and vice a versa so we need to
+check the entire thing all the conditions must be satisfied for this to happen so yeah its like that 
+
+Coming on the tab function see we press tab function now in various various os the tab is defined different
+different we need to make a solid proof of it like it can make issues in the cursor positions and visual 
+things as well so now see we can do the normally which we did for the \n\r like if conditions and edit those 
+attributes but the thing is this functions is needed again and again in further like searching etc so we 
+need to make a new array of the characters for this one and maintain the visual representation of the line
+on this one now this is needed as the char thing is see if we want some specific letter or the cursor 
+positions or the also problems would arise with the size as well so we simply create a new one 
+
+Okay so see the thing is simple we just add the stuff as it is in the data already present in the data which
+we have just at the position of the \t we just add the spaces which extra are needed so we take it like that
+and also add the length which is extra as per it 
+Now we pass out the address of the line of the thing and then we add all of those in this render now about
+the size of the render what we do is we take this 
+Already size + ( tabs * ( spaces of tabs -1 )  )  
+Why spaces of tabs -1  cause simple see in the size of line the \t each of them is of 1 byte and it is already
+included so we don't need to like make it so we just add the extra spaces whose size is not considered simple 
+
+And we call this function everywhere the where we add the all these characters to the data stutter of the row
+input here we just initialise the render data as null and the size as 0 and then call the function which adds
+the data to the render data 
+
+Okay about the cursor thing in the tab thing the cursor don't really perform correctly so we need to make it
+correct here we so we make a new attribute of the render cursor cause its just easier and its specifically
+used for iteration of cursor in the render the normal cursor is used in the iterations of just characters 
+So we also need to make the converter which does this one converts the cursor cols to render cols we pass the
+data and it does the stuff 
+Now see a thing many of times we do some spaces and do spaces and then click on the tab then our cursor directly
+reaches the part so we need to make this thing like we cannot just add the thing directly we need to add only the 
+part so that the cursor should go the multiple of that part only 
+(tab_spaces -1 ) - ( num % tab_spaces ) this does the thing and in the rest of the parts we just add the things 
+
+Why this one simple we the tab function always follow the multiple for the index for the tab spaces which we 
+define for the and then so this one helps in it for us 
+
+
+
+----------------
+Issues with the arrow up and the arrow down are still there please look into it and correct it out 
+
+
+____________________
+
+Now we jump on the status symbol in the end of the line we have the last lone is dedicated for the status like
+what is the file name and the number of lines nd all those status stuff is present in here 
+
+Now listen we have to differentiate this line we kinda need got make the colors inverted for it so we use the 
+escape sequence of the [7m which does the part now we need to add the spaces if nothing is here so that the we
+can invert the cooler we need to give the input to make it inverted so this is the thing and also we [m so that
+the next ones dont get the inverted colors 
+
+Onto the next part we remove the last line from the thing so that the we don't access the status line 
+ 
+We add the details of it line filename the cursor positions and the line which we are accessing like 2nd line
+of all like that format we add in it 
+
+Okay we remove one more line the very last line is kept for keeping the messages like helping messages like
+ctrl +q for exit or stuff like those you get it now see 
+There is this library of the time which like calculate all the seconds after the 1970 stuff so it does it and
+denoted by time(NULL) for getting the stuff and 
+
+Its kinda optional if you want to invert the colors or not I did cuase why not its kinda cool here 
+Okay here comes the list of new things valets this is used to get all the augmented values to store the thing
+like for example 
+"Hello I am %s" varad now here you need to carry it again and again for the thing to send it like if you use 
+the snprintf you need to send both of them instead you can just send it to the valets it keeps on appending 
+th stuff one by one for example 
+
+'S' → copy →  "S"
+'a' → copy →  "Sa"
+'v' → copy →  "Sav"
+'e' → copy →  "Save"
+'d' → copy →  "Saved"
+' ' → copy →  "Saved "
+
+'%' → STOP! look at next char...
+  'd' → call va_arg(ap, int) → pulls 42 from the list
+       → write 42 → "Saved 42"
+       → ap now points to nothing (list exhausted)
+
+' ' → copy →  "Saved 42 "
+'l' → copy →  "Saved 42 l"
+'i' → copy →  "Saved 42 li"
+'n' → copy →  "Saved 42 lin"
+'e' → copy →  "Saved 42 line"
+'s' → copy →  "Saved 42 lines"
+
+
+Like this one is cool like here the loop kinda starts from the start and goes till the end and then we have 
+kept the list of the sentence as well so our messege gets copied 
+
+Now we also have the timer here like once the messege is displayed it should jsut show it for 5 seconds only 

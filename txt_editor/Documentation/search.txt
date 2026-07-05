@@ -1,0 +1,36 @@
+Okay this one is short and quicker see first of all we have the option to search for each of the letter in 
+the file we want to iterate over so simple first the thing goes with taking the input of the query which user 
+wants so we kind of modifies it from the way the earlier we kept the system made for the saving the file 
+which takes the input from the user we use the same function for the thing 
+
+Only thing we modify in this function is we just pass over the function which finds out the words so like see
+ it was like every single time we add something the function is Called and then the searching goes on continuously awesome right 
+
+Okay one thing I would love to tell Is about the cursor position finding we have this
+char *found = strstr(row->render , ques) ;  
+ found - row->render
+We get the address of the part where the string is found and then reduce it with the address of the row->render means the first
+thing of the line address subtraction thing . 
+
+
+Lets move on the part which finds out all the words so we have the strstr which looks out if the word is the part of the render 
+sentence or not so here we need to pass the render 
+sentence but one major issue occurs as we also have to set our cursor as per it so then we need to make another function which 
+converts the render column to the normal text column as our enter cursor is set on those things so we make it and then we iterate
+the thing in the entire loop passing each of sentence one by one and then as soon as we find we put our cursor to it also we need
+to adjust the row offset as per it so yeah .
+
+
+Now we have like if we press the escape the entire process stops and all the things get terminated so we like store all the curcial
+info of the cursor and the page and then if the escape is pressed we can bring those info before the terminal went to that process 
+and then we just bring back all the details make it happen also if we want to come out of the typing thing we need to press the
+enter button again .
+
+
+Now what to do if there are multiple words same to same in the thing so we need the way to like iterate with them like arrow up
+and arrow left to go to previous one and the inverse for going to next one 
+So we are keeping these two aspects thew last find and the direction if the forward direction needed we take 1 and vice a versa 
+-1 like that and then we set it out and in the entire of the loop we just add the thing with the direction which is there and 
+as we find it we shift our cursor to that part and then also update our last object found so that for finding the next time we
+can start from there and also if we reach the end of the row we just update our pointer from the start .
+

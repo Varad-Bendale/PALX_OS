@@ -1,0 +1,71 @@
+So see we now are done with the text view what if we want to add any character add anything on the file so we
+go here for the executions now see the first class of action we make the functions of 
+Inserting the characters. So now we have the ascii value of the thing we got the position on the row where to
+exactly insert the stuff and then we have the line where exactly to print it 
+We reallocate the memory to the line as we are adding the new character and the \0 we would always assign the
+\0 everytime cause if you see we have the line of size we would never give the size of the line for the \0 
+thing it would always be the the size of the line without the \0 thing and then we move all the characters
+one position ahead of the thing and then we then assign the character to the designated point and then we
+give them further to do the work 
+
+
+So if you see there are few of the functions or the keys like suppose ctrl + l or like backspace or like
+escape which we don't want to write  it down so we just we just handle those edge cases 
+
+Now next in the list is the saving of the file you wrote everything down now you need to store it out somewhere
+in the file so first of all we just copy all the lines and save it in the buffer okay so we do is we have the 
+already created a int why is it needed cuase we need to know what kind space of file is there and bee processed
+like and its used in the write function 
+Comming to real deal we add all the sizes and then pass it back to the number and then we just make a char 
+dynamic string and then malloc it to the sizer of the file and then we pass the the lines one by one now if
+you see here there is the p its just used to take all the heap memory of the buf which is there and then we
+make it reach it there and then we like go on comfy all the liens one by one and then we do the \n just we
+need to move the cursor to the end of the line so we need to do it and booms its done 
+Okay onto the next part it is just making the file now first if we dont have any of the filename then explained
+in the last part 
+Else we would just gather out all the info of it and then open the file and then truncate now see the truncate
+is like the function which like reduces the file size to the whatever size we need that much only so now the 
+only truncate removes everything but there is this truncate which like reduces the size to out own size we
+give that much only now we give it the len and do it now why not completely remove the stuff suppose if the
+file is offed or something mishaps occurs then the issue may happen and if the truncated is done entire thing 
+is gone but the truncate just removes the rest of the part which is not used so yeah better way now we have 
+these create means we create a new file completely then we give the persmissions of the read and write we have
+to give it everytime and there are the special permissions of the 0644 so we provide those as well and good to
+go well if you are wondering about the part where like the its just the number assigned for the file thing if 
+you remember there was this 1 for mouse 2 for keyboard those type a shit that way its like the thing 
+
+
+Okay we come on the changes thing see when we like quit the programme we need to know that there are any changes
+in the file text happen or not like that so we just keep track of it and then we just add it everywhere we going
+to change it .
+Similarly we need to like also add the error management thing like if we do ctrl + q we need to tell them the 
+file is been changed and the changes are not saved to the file so like that we are keeping it like if you dont
+want to save the thing just press the thing twice so its liek that 
+
+And now we come to the backspace stuff see its like we press the backspace it just shift each of the character
+one by one column and then we just add it like that now if we press the back space after the cusor column is after
+0 but is it at 0 then once we press it the whole line needs to go the line to the previous line so we just free out
+the line the hash and then we just copy the whole thing and then put it to the previous row we need to do the realloc
+add the size of the thing and then add the rows of the thing also we need to change the rest all of the thing after 
+the Rows like we are delete the one line the all the next lines are needed to be reduced so like need to change all
+of it so during memmove we need to like make the size of all of that okay with all the see like we deleted the row 
+number 2 but we need to make all the rows copied one by one to the upper stuff right so we do it like that so we need
+the entire size of the stuff we are going to move 
+
+Okay next in the line is our enter button we want the next line to be made liek if the enter button is clicked if
+the cursor is at the 0 then the next line is been formed and then all the text which is there in the previous row 
+it copies and then posts it on the next line now we kind of replace our previous function named as the append lines 
+it was like if we hit the bottom of the screen it makes a space of the new line its just like that but with additional
+lines added to it as well so see if the cols is at 0 we move entire row but if it is in middle it make a new row and
+then copies all the text from the cursor to the end and then post that much of data in that line and shifts it so its 
+like that
+
+Okay comming to the next function save as see if you remember we just kept some of the part in the saving of the file 
+like see if we dont have any of the filename already given we are making one then we just need to like add another
+buffer part where we just put all the characters one by one and then it goes in the buffer and we then write that in
+the last line buffer the status messege there we just put it and then we just make those buffer if the escape button 
+is pushed we just cancel the whole thing and if the enter is clicked we have the name of the file and also if we have 
+the have the size of the buffer given if that buffer size is limiting out we just multiply rthe size with twice and 
+then realloc the buffer and then add the next of the words in there also we need to make sure that at any cost we just
+need to add the \0 in the end so that it knowns where to stop and also if the delete thing is pressed we need to lower 
+the len and then add the \0 to it so yes ig its done till here 
